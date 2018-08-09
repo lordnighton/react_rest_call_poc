@@ -12,7 +12,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-tabs": "^2.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

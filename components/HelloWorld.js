@@ -1,51 +1,93 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
+import Profile from "./Profile";
+import Relations from "./Relations";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 class HelloWorld extends React.Component {
-
   constructor(props) {
     super(props);
-    this.state = {contacts: [], isRequestPerformed: false};
+    this.state = {
+      tabIndex: 0,
+      contacts: [],
+      relations: [],
+      isProfileRequested: false,
+      isRelationsRequested: false
+    };
   }
 
-  handleClick() {
-    if (!this.state.isRequestPerformed) {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then(response => {
-        // create an array of contacts only with relevant data
-        const newContacts = response.data.map(c => {
-          return {
-            id: c.id,
-            name: c.name
-          };
-        });
+  requestProfiles() {
+    if (!this.state.isProfileRequested) {
+      axios
+        .get("https://jsonplaceholder.typicode.com/users")
+        .then(response => {
+          const newContacts = response.data.map(c => {
+            return {
+              id: c.id,
+              name: c.name
+            };
+          });
 
-        // create a new "State" object without mutating
-        // the original State object.
-        const newState = Object.assign({}, this.state, {
-          contacts: newContacts,
-          isRequestPerformed: true
-        });
+          const newState = Object.assign({}, this.state, {
+            contacts: newContacts,
+            isProfileRequested: true
+          });
 
-        // store the new state object in the component's state
-        this.setState(newState);
-        console.log(response);
-      })
-      .catch(error => console.log(error));
+          this.setState(newState);
+          console.log(response);
+        })
+        .catch(error => console.log(error));
     }
+  }
+
+  requestRelations() {
+    if (!this.state.isRelationsRequested) {
+      axios
+        .get("https://jsonplaceholder.typicode.com/todos")
+        .then(response => {
+          const newRelations = response.data.map(c => {
+            return {
+              id: c.id,
+              title: c.title,
+              completed: c.completed
+            };
+          });
+
+          const newState = Object.assign({}, this.state, {
+            relations: newRelations,
+            isRelationsRequested: true
+          });
+
+          this.setState(newState);
+          console.log(response);
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  componentDidMount() {
+    this.requestProfiles();
+    this.requestRelations();
   }
 
   render() {
     return (
-      <div onClick={(e) => this.handleClick(e)}>
-        <h1>Hello World to {this.state.contacts.length} customers</h1>
-
-        {this.state.contacts.map(function(listValue){
-          return <div key={listValue.id}>{listValue.name}</div>;
-        })}
-      </div>
-    )
+      <Tabs
+        selectedIndex={this.state.tabIndex}
+        onSelect={tabIndex => this.setState({ tabIndex })}
+      >
+        <TabList>
+          <Tab>Title 1</Tab>
+          <Tab>Title 2</Tab>
+        </TabList>
+        <TabPanel>
+          <Profile contacts={this.state.contacts} />
+        </TabPanel>
+        <TabPanel>
+          <Relations relations={this.state.relations} />
+        </TabPanel>
+      </Tabs>
+    );
   }
 }
 export default HelloWorld;
