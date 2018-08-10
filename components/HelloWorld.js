@@ -4,6 +4,8 @@ import Profile from "./Profile";
 import Relations from "./Relations";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
+import 'react-tabs/style/react-tabs.css';
+
 class HelloWorld extends React.Component {
   constructor(props) {
     super(props);
