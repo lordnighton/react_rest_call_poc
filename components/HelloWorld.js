@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Profile from "./Profile";
 import Relations from "./Relations";
+import TabsForm from "./TabsForm";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import 'react-tabs/style/react-tabs.css';
@@ -74,21 +75,25 @@ class HelloWorld extends React.Component {
 
   render() {
     return (
-      <Tabs
-        selectedIndex={this.state.tabIndex}
-        onSelect={tabIndex => this.setState({ tabIndex })}
-      >
-        <TabList>
-          <Tab>Title 1</Tab>
-          <Tab>Title 2</Tab>
-        </TabList>
-        <TabPanel>
-          <Profile contacts={this.state.contacts} />
-        </TabPanel>
-        <TabPanel>
-          <Relations relations={this.state.relations} />
-        </TabPanel>
-      </Tabs>
+        <div>
+          <TabsForm />
+
+          <Tabs
+            selectedIndex={this.state.tabIndex}
+            onSelect={tabIndex => this.setState({ tabIndex })}
+          >
+            <TabList>
+              <Tab>Title 1</Tab>
+              <Tab>Title 2</Tab>
+            </TabList>
+            <TabPanel>
+              <Profile contacts={this.state.contacts} />
+            </TabPanel>
+            <TabPanel>
+              <Relations relations={this.state.relations} />
+            </TabPanel>
+          </Tabs>
+        </div>
     );
   }
 }
