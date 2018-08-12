@@ -1,4 +1,6 @@
 import React from "react";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Profile extends React.Component {
   constructor(props) {
